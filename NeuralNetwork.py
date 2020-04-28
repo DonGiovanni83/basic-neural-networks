@@ -6,6 +6,8 @@ from math_helpers import sigmoid, sigmoid_derivative
 class NeuralNetwork:
     def __init__(self, layer_sizes):
 
+        print(f"Initializing network: {str(layer_sizes)}")
+
         self.layer_count = len(layer_sizes)
 
         self.layer_sizes = layer_sizes
