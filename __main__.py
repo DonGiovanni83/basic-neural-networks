@@ -10,7 +10,7 @@ def main():
     neural_network = NeuralNetwork([784, 30, 16, 10])
     print(f"Initializing network: {len(x_train)} -> 30 -> 16 -> 10")
 
-    neural_network.train_SGD(x_train, y_train, 30, 10, 3.0, test_data=[x_test, y_test])
+    neural_network.train_SGD(x_train, y_train, 30, 10, 0.04, test_data=[x_test, y_test])
 
 
 def prepare_data():

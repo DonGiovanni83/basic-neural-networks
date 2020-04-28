@@ -30,7 +30,7 @@ class NeuralNetwork:
                 self.update(batch, learning_rate)
 
             if test_data is not None:
-                print(f"Epoch {j}: {self.evaluate(test_data)} / {len(test_data)}")
+                print(f"Epoch {j}: {self.evaluate(test_data)} / {test_data[0].shape[1]}")
 
             else:
                 print(f"Epoch {j} complete")
@@ -62,8 +62,8 @@ class NeuralNetwork:
         :return: the computed output vector of the current network
         """
 
-        test_results = [(np.argmax(self.compute(x)), y) for x, y in zip(test_data)]
-        return sum(int(x == y) for (x, y) in test_results)
+        test_results = [(np.argmax(self.compute(x)), np.argmax(y)) for x, y in zip(test_data[0].T, test_data[1].T)]
+        return sum(int(x == y) for x, y in test_results)
 
     def compute(self, a):
         """
@@ -72,7 +72,8 @@ class NeuralNetwork:
         :return: network output for input a
         """
         for b, w in zip(self.biases, self.weights):
-            a = sigmoid(np.dot(w, a) + b)
+            tmp = np.dot(w, a).reshape(w.shape[0], 1)
+            a = sigmoid(tmp + b)
         return a
 
     def backpropagate(self, input_data, expected_data):
